@@ -1,0 +1,16 @@
+services:
+  library-finder:
+    build:
+      context: .
+    container_name: library-finder-${ENVIRONMENT}
+    restart: always
+    working_dir: /usr/library-finder/src
+    command: sh -c "python main.py"
+    env_file: ./src/.env.${ENVIRONMENT}
+    networks:
+      - library-network
+
+networks:
+  library-network:
+    name: library-network-${ENVIRONMENT}
+    external: true
