@@ -8,10 +8,17 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.13,<4.0"
 dependencies = [
-    "faststream[rabbit] (>=0.6.3,<0.7.0)"
+    "faststream[rabbit] (>=0.6.3,<0.7.0)",
+    "pydantic-settings (>=2.12.0,<3.0.0)"
 ]
 
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "ruff (>=0.14.7,<0.15.0)",
+    "mypy (>=1.19.0,<2.0.0)"
+]
