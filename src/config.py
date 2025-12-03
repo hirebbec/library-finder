@@ -14,6 +14,8 @@ class Settings(BaseSettings):
 
     RABBITMQ_SEARCH_QUEUE: str = "search"
 
+    ELASTIC_PDF_INDEX: str = "pdf_index"
+
     ENVIRONMENT: str = "local"
     TIME_ZONE: timezone = timezone(offset=timedelta(hours=+3))
     CORS_ALLOW_ORIGIN_LIST: str = "*"
@@ -43,6 +45,11 @@ class Settings(BaseSettings):
     REDIS_PORT: int = 16379
     REDIS_PASSWORD: str = "library-redis"
     REDIS_DB: int = 0
+
+    ELASTIC_HOST: str = "library-elasticsearch"
+    ELASTIC_USER: str = "elastic"
+    ELASTIC_PASSWORD: str = "library-elasticsearch"
+    ELASTIC_PORT: int = 19200
 
     @functools.cached_property
     def cors_allow_origins(self) -> list[str]:
@@ -74,6 +81,11 @@ class Settings(BaseSettings):
     def redis_dsn(self) -> str:
         redis_host = "localhost" if self.ENVIRONMENT == "local" else self.REDIS_HOST
         return f"redis://:{self.REDIS_PASSWORD}@{redis_host}:{self.REDIS_PORT}/{self.REDIS_DB}"
+
+    @functools.cached_property
+    def elastic_dsn(self) -> str:
+        elastic_host = "localhost" if self.ENVIRONMENT == "local" else self.ELASTIC_HOST
+        return f"http://{self.ELASTIC_USER}:{self.ELASTIC_PASSWORD}@{elastic_host}:{self.ELASTIC_PORT}"
 
     model_config = SettingsConfigDict(
         env_file=env_file if env_file else None,
