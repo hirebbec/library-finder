@@ -4,7 +4,7 @@ from faststream import FastStream
 from faststream.rabbit import RabbitBroker, RabbitQueue
 
 from config import settings
-from message import MessageSchema
+from schemas.message import MessageSchema
 from search import SearchService
 from faststream import Depends
 
